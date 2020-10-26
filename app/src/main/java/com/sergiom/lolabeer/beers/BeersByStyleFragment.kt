@@ -1,15 +1,13 @@
 package com.sergiom.lolabeer.beers
 
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sergiom.lolabeer.MainActivity
 import com.sergiom.lolabeer.R
 import com.sergiom.lolabeer.api.ApiConstants
 import com.sergiom.lolabeer.api.BrewerydbService
@@ -49,6 +47,11 @@ class BeersByStyleFragment : Fragment(), ItemSelectedListener, BeersByStyleInter
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_beers_by_style, container, false)
 
+        (activity as MainActivity).supportActionBar?.title = beersByStylePresenter.getCurrentStyle()
+        //Add the arrow on the left side of the name
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayShowHomeEnabled(true)
+
         //Override BackButton
         view.isFocusableInTouchMode = true
         view.requestFocus()
@@ -73,17 +76,30 @@ class BeersByStyleFragment : Fragment(), ItemSelectedListener, BeersByStyleInter
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            //This id is used for the back button. Set to go to the sign in fragment
+            android.R.id.home -> {
+                goBackToPreviousFragment()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun setRecyclerView(beers: ArrayList<Beer>, favBeers: ArrayList<Beer>) {
         layoutManager = GridLayoutManager(this.context,3)
-        beers_by_style_recycler_view.layoutManager = layoutManager
+        try {
+            beers_by_style_recycler_view.layoutManager = layoutManager
+        } catch (ex: NullPointerException) {}
 
         adapterBeersByStyle = if (beersByStylePresenter.getPositionToReload() != 0 && beers.isNotEmpty()) {
             BeersByStyleRecyclerViewAdapter(beers, favBeers, this)
         } else {
             BeersByStyleRecyclerViewAdapter(beers, favBeers, this)
         }
-
-        beers_by_style_recycler_view.adapter = adapterBeersByStyle
+        try {
+            beers_by_style_recycler_view.adapter = adapterBeersByStyle
+        } catch (ex: NullPointerException) {}
     }
 
     override fun updateRecycler(beers: ArrayList<Beer>) {

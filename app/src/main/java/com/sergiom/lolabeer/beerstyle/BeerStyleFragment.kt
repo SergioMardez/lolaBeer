@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sergiom.lolabeer.MainActivity
 import com.sergiom.lolabeer.R
 import com.sergiom.lolabeer.api.ApiConstants
 import com.sergiom.lolabeer.api.BrewerydbService
@@ -45,16 +47,25 @@ class BeerStyleFragment : Fragment(), ItemSelectedListener,StyleInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).supportActionBar?.title = "LolaBeer"
+        //Hide the arrow on the left side of the name
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayShowHomeEnabled(false)
         stylePresenter.callToApi()
         fragmentManager?.popBackStack()
     }
 
     override fun setRecyclerView(styleList: ArrayList<Style>) {
         layoutManager = LinearLayoutManager(this.context)
-        style_recycler_view.layoutManager = layoutManager
+        try {
+            style_recycler_view.layoutManager = layoutManager
+        } catch (ex: NullPointerException) {}
 
         adapterStyle = StyleRecyclerViewAdapter(styleList, this)
-        style_recycler_view.adapter = adapterStyle
+
+        try {
+            style_recycler_view.adapter = adapterStyle
+        } catch (ex: NullPointerException) {}
     }
 
     override fun onItemSelected(bundle: Bundle) {

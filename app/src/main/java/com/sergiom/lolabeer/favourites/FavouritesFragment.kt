@@ -5,9 +5,11 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sergiom.lolabeer.MainActivity
 import com.sergiom.lolabeer.R
 import com.sergiom.lolabeer.app.LolaBeerApp
 import com.sergiom.lolabeer.beers.adapter.BeersByStyleRecyclerViewAdapter
@@ -32,6 +34,12 @@ class FavouritesFragment: Fragment(), ItemSelectedListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_beers_by_style, container, false)
+
+        (activity as MainActivity).supportActionBar?.title = "Favourites"
+        //Add the arrow on the left side of the name
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayShowHomeEnabled(true)
+
         //Override BackButton
         view.isFocusableInTouchMode = true
         view.requestFocus()

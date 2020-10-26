@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.sergiom.lolabeer.app.LolaBeerApp
+import com.sergiom.lolabeer.beers.BeersByStyleFragment
 import com.sergiom.lolabeer.beerstyle.BeerStyleFragment
 import com.sergiom.lolabeer.favourites.FavouritesFragment
 
@@ -40,6 +41,12 @@ class MainActivity : AppCompatActivity() {
 
                 val transaction = supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.content_main, favFragment).addToBackStack(null).commit()
+            }
+            //This id is used for the back button. Set to go to the sign in fragment
+            android.R.id.home -> {
+                supportFragmentManager.popBackStack()
+                val transaction = supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.content_main, BeerStyleFragment()).commit()
             }
         }
         return super.onOptionsItemSelected(item)

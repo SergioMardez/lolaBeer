@@ -16,6 +16,9 @@ import com.sergiom.lolabeer.beerstyle.BeerStyleFragment
 import com.sergiom.lolabeer.interfaces.ItemSelectedListener
 import kotlinx.android.synthetic.main.fragment_beers_by_style.*
 
+/**
+ * Fragment that gets the favourite beers and show them using the beers by style recyclerView.
+ */
 class FavouritesFragment: Fragment(), ItemSelectedListener {
 
     private lateinit var favList: ArrayList<Beer>

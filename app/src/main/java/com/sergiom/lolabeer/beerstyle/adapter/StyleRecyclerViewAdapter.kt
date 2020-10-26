@@ -10,7 +10,6 @@ import com.sergiom.lolabeer.R
 import com.sergiom.lolabeer.interfaces.ItemSelectedListener
 import com.sergiom.lolabeer.beerstyle.model.Style
 
-
 class StyleRecyclerViewAdapter(data: ArrayList<Style>, listener: ItemSelectedListener) : RecyclerView.Adapter<StyleRecyclerViewAdapter.ViewHolder>() {
 
     private var styles = data
@@ -38,8 +37,7 @@ class StyleRecyclerViewAdapter(data: ArrayList<Style>, listener: ItemSelectedLis
         init {
             itemView.setOnClickListener { v: View  ->
                 val args = Bundle()
-                args.putString("style", styles[adapterPosition].name)
-
+                args.putString("style", styles[adapterPosition].name) //To know the style selected
                 listener.onItemSelected(args)
             }
         }

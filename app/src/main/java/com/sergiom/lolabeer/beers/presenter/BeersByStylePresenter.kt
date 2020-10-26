@@ -29,9 +29,9 @@ class BeersByStylePresenter(beersByStyleInterface: BeersByStyleInterface) {
             positionToReload = bundle.getInt("adapterPos")
             beersSelected = LolaBeerApp.instance.getAllStyleBeers()
             pageNumCall = LolaBeerApp.instance.getPage()
+            favList = LolaBeerApp.instance.getFavourites()
         } catch(exception: Exception){
         }
-        favList = LolaBeerApp.instance.getFavourites()
     }
 
     fun callToApi(pageNum: Int) {
@@ -74,6 +74,7 @@ class BeersByStylePresenter(beersByStyleInterface: BeersByStyleInterface) {
         callToApi(pageNumCall)
     }
 
+    //This will check if the beer has the style needed to show it or not
     private fun checkStyles(beerList: ArrayList<Beer>): ArrayList<Beer> {
         val selectedList = arrayListOf<Beer>()
 

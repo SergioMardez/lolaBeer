@@ -19,7 +19,9 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_beer_detail.*
 import uk.co.senab.photoview.PhotoViewAttacher
 
-
+/**
+ * Fragment with the beer detail. Image, name and description.
+ */
 class BeerDetailFragment: Fragment() {
     private val detailPresenter = BeerDetailPresenter()
     private var myFavourite = false
@@ -96,6 +98,7 @@ class BeerDetailFragment: Fragment() {
             pictureDialog.show(fragmentManager!!, null)
         }
 
+        //To control the favourite or not addition
         favourite.setOnClickListener {
             if(!myFavourite) {
                 it.background = ContextCompat.getDrawable(it.context, R.drawable.ic_my_favorite_24)

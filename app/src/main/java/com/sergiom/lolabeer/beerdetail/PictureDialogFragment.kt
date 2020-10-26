@@ -11,6 +11,9 @@ import com.sergiom.lolabeer.R
 import com.squareup.picasso.Picasso
 import uk.co.senab.photoview.PhotoViewAttacher
 
+/**
+ * Dialog Fragment with the beer image. This image can be zoomed
+ */
 class PictureDialogFragment: DialogFragment() {
 
     private lateinit var picture: String
@@ -36,7 +39,7 @@ class PictureDialogFragment: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Picasso.get().load(picture).into(imageView)
-        photoViewAttacher = PhotoViewAttacher(imageView)
+        photoViewAttacher = PhotoViewAttacher(imageView) //This will do the zoom trick
     }
 
     override fun onStart() {

@@ -29,7 +29,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
- * Fragment with the style list view.
+ * Fragment with the style list view. Only styles are showed.
  */
 class BeerStyleFragment : Fragment(), ItemSelectedListener,StyleInterface {
 

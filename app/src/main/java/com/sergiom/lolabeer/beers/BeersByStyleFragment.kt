@@ -30,7 +30,7 @@ import retrofit2.Retrofit
 import java.lang.Exception
 
 /**
- * Fragment with the beers by style list view.
+ * Fragment with the beers by style list view. The view is a grid with 3 items per row.
  */
 class BeersByStyleFragment : Fragment(), ItemSelectedListener, BeersByStyleInterface {
 

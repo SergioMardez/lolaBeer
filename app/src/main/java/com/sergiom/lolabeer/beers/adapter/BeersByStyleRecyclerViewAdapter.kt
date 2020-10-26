@@ -30,6 +30,7 @@ class BeersByStyleRecyclerViewAdapter(data: ArrayList<Beer>, fav: ArrayList<Beer
     override fun onBindViewHolder(holder: BeersByStyleRecyclerViewAdapter.ViewHolder, position: Int) {
         holder.itemTitle.text = beersByStyle[position].beerName
 
+        //Check if the beer is a favourite one to change background color
         for (beer in beerFavs) {
             if (beer.idBeer == beersByStyle[position].idBeer!!) {
                 holder.itemCardView.setCardBackgroundColor(Color.parseColor("#a3e7ad"))
@@ -68,6 +69,7 @@ class BeersByStyleRecyclerViewAdapter(data: ArrayList<Beer>, fav: ArrayList<Beer
 
         init {
             itemView.setOnClickListener { v: View ->
+                //Prepare all data to go to detail view
                 val args = Bundle()
                 args.putString("beerId", beersByStyle[adapterPosition].idBeer)
                 args.putString("beerName", beersByStyle[adapterPosition].beerName)

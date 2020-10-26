@@ -34,7 +34,7 @@ class BeerDetailPresenter {
         }
     }
 
-    fun getTheBeer(): Beer {
+    private fun getTheBeer(): Beer {
         val beer = Beer()
         beer.idBeer = beerId
         beer.description = beerDescription
@@ -47,5 +47,13 @@ class BeerDetailPresenter {
 
     fun isFavourite(): Boolean {
         return myFavourite
+    }
+
+    fun storeToShared() {
+        LolaBeerApp.instance.storeFavourite(getTheBeer())
+    }
+
+    fun deleteFromShared() {
+        LolaBeerApp.instance.deleteFromFavourites(getTheBeer())
     }
 }

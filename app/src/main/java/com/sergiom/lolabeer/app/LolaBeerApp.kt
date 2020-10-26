@@ -17,13 +17,15 @@ class LolaBeerApp: Application() {
 
     private var retrofit: Retrofit? = null
     private var sharedPreferences: SharedPreferences? = null
+    private lateinit var activity: Activity
 
     override fun onCreate() {
+        instance = this
         super.onCreate()
     }
 
     fun getShared(activity: Activity) {
-        instance = this
+        instance.activity = activity
         sharedPreferences = activity.getSharedPreferences(
             "lolaPref",
             Context.MODE_PRIVATE
@@ -42,16 +44,19 @@ class LolaBeerApp: Application() {
     }
 
     fun storePage(numPage: Int) {
+        checkShared()
         val editor = sharedPreferences?.edit()
         editor?.putInt("page", numPage)
-        editor?.commit()
+        editor?.apply()
     }
 
     fun getPage(): Int {
+        checkShared()
         return sharedPreferences?.getInt("page", 0)!!
     }
 
     fun storeFavourite(beer: Beer) {
+        checkShared()
         val storedFavourites = getFavourites()
         storedFavourites.add(beer)
 
@@ -59,18 +64,21 @@ class LolaBeerApp: Application() {
     }
 
     fun getFavourites(): ArrayList<Beer> {
+        checkShared()
         return getList("beers")
     }
 
     fun storeAllStyleBeers(list: ArrayList<Beer>) {
+        checkShared()
         val editor = sharedPreferences?.edit()
         val gson = Gson()
         val json = gson.toJson(list)
         editor?.putString("allBeers", json)
-        editor?.commit()
+        editor?.apply()
     }
 
     fun getAllStyleBeers(): ArrayList<Beer> {
+        checkShared()
         return getList("allBeers")
     }
 
@@ -79,7 +87,7 @@ class LolaBeerApp: Application() {
         val gson = Gson()
         val json = gson.toJson(list)
         editor?.putString(key, json)
-        editor?.commit()
+        editor?.apply()
     }
 
     private fun getList(key: String): ArrayList<Beer> {
@@ -107,10 +115,18 @@ class LolaBeerApp: Application() {
         val gson = Gson()
         val json = gson.toJson(storedFavourites)
         editor?.putString("beers", json)
-        editor?.commit()
+        editor?.apply()
+    }
+
+    private fun checkShared() {
+        if (sharedPreferences == null) {
+            getShared(instance.activity)
+        }
     }
 
     companion object {
         lateinit var instance: LolaBeerApp
+
+        fun getAppContext(): Context = instance.applicationContext
     }
 }

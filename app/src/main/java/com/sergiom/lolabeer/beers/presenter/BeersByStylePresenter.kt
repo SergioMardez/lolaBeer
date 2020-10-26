@@ -29,8 +29,9 @@ class BeersByStylePresenter(beersByStyleInterface: BeersByStyleInterface) {
             positionToReload = bundle.getInt("adapterPos")
             beersSelected = LolaBeerApp.instance.getAllStyleBeers()
             pageNumCall = LolaBeerApp.instance.getPage()
-            favList = LolaBeerApp.instance.getFavourites()
-        } catch(exception: Exception){}
+        } catch(exception: Exception){
+        }
+        favList = LolaBeerApp.instance.getFavourites()
     }
 
     fun callToApi(pageNum: Int) {

@@ -39,6 +39,8 @@ class BeerDetailFragment: Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_beer_detail, container, false)
 
+        myFavourite = detailPresenter.isFavourite()
+
         //Override BackButton
         view.isFocusableInTouchMode = true
         view.requestFocus()
@@ -95,19 +97,19 @@ class BeerDetailFragment: Fragment() {
         }
 
         favourite.setOnClickListener {
-            if(!detailPresenter.isFavourite()) {
+            if(!myFavourite) {
                 it.background = ContextCompat.getDrawable(it.context, R.drawable.ic_my_favorite_24)
+                it.tag = "favourite"
                 myFavourite = true
-                val beerToAdd = detailPresenter.getTheBeer()
-                LolaBeerApp.instance.storeFavourite(beerToAdd)
+                detailPresenter.storeToShared()
             } else {
                 it.background = ContextCompat.getDrawable(
                     it.context,
                     R.drawable.ic_not_favorite_border_24
                 )
+                it.tag = "notFavourite"
                 myFavourite = false
-                val beerToDelete = detailPresenter.getTheBeer()
-                LolaBeerApp.instance.deleteFromFavourites(beerToDelete)
+                detailPresenter.deleteFromShared()
             }
         }
     }
